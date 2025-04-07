@@ -52,11 +52,16 @@ public:
 	}
 	
 	// Print all Employees
-	void printAll() {
+	/*void printAll() {
 		std::cout << "Employees: " << std::endl;
 		for (Employee* emp : data) {
 			emp->print();
 		}
+	}*/
+
+	void printAll() {
+		std::cout << "Employees: " << std::endl;
+		std::for_each(data.begin(), data.end(), [](const Employee* emp) {emp->print();});
 	}
 
 	// Print all Engineers
@@ -104,7 +109,7 @@ int main() {
 
 	readFile(db, filename);
 
-	// db.printAll();
+	//db.printAll();
 	db.printEngineers();
 
 	return 0;

@@ -50,18 +50,30 @@ public:
 	void addEmployee(Employee* emp) {
 		data.push_back(emp);
 	}
-	
-	// Print all Employees
-	/*void printAll() {
-		std::cout << "Employees: " << std::endl;
-		for (Employee* emp : data) {
-			emp->print();
-		}
-	}*/
 
 	void printAll() {
 		std::cout << "Employees: " << std::endl;
 		std::for_each(data.begin(), data.end(), [](const Employee* emp) {emp->print();});
+	}
+
+
+	// sort by not chairmans with more age.
+	void printAllWithoutChairman() {
+		std::cout << "All without chairmans: " << std::endl;
+
+		std::vector<const Employee*> non_chairmen;
+		std::copy_if(data.begin(), data.end(), std::back_inserter(non_chairmen),
+			[](const Employee* emp) { return emp->getPosition() != "председатель"; });
+
+		// Sort the temporary vector by age
+		std::sort(non_chairmen.begin(), non_chairmen.end(),
+			[](const Employee* a, const Employee* b) {
+				return a->getAge() < b->getAge();
+			});
+
+		// Print the sorted non-chairmen
+		std::for_each(non_chairmen.begin(), non_chairmen.end(),
+			[](const Employee* emp) { emp->print(); });
 	}
 
 	// Print all Engineers
@@ -111,6 +123,8 @@ int main() {
 
 	//db.printAll();
 	db.printEngineers();
+	std::cout << "\n";
+	db.printAllWithoutChairman();
 
 	return 0;
 }
